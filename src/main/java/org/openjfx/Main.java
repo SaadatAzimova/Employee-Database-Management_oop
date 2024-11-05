@@ -6,50 +6,26 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
 
-        ArrayList<Task> tasks = new ArrayList<Task>();
+        TaskData taskData = new TaskData();
 
-        Connection conn;
-        String url = "jdbc:postgresql:testdb"; // testdb is a name of localhost database
-        String username = "postgres";
-        String password = "postgres";
+        Task tt = taskData.getTask(6);
 
-        try {
-            conn = DriverManager.getConnection(url, username, password);
-            System.out.println("Database is connected...");
+        int id = taskData.insertTask("Assignment", "Java and Database assignment with database", tt.getDeadline(), "MEDIUM");
+        System.out.println(id);
 
-            String sql = "SELECT * FROM TASKS WHERE PRIORITY = ?";
-            PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1, "HIGH");
-            ResultSet resultSet = preparedStatement.executeQuery();
+        /*
+        System.out.println(tt);
 
-            while( resultSet.next() ){
-                int id = resultSet.getInt("taskId") ;
-                String name= resultSet.getString("taskname");
-                String desc =  resultSet.getString("description");
-                Date deadline =  resultSet.getDate("deadline");
-                String p =  resultSet.getString("priority");
+        taskData.updateTask(6, "new task", tt.getDescription(), tt.getDeadline(), tt.getPriority());
+
+        taskData.deleteTask(1);
 
 
-                Task task = new Task(id, name, desc, deadline, p);
-                tasks.add(task);
-                //System.out.println(task);
-            }
-            resultSet.close();
+        ArrayList<Task> tasks = taskData.getAllTasks();
 
-            conn.close();
-
-            for(Task e:tasks){
-                System.out.println(e);
-            }
-
-
-
-
-        }
-        catch(SQLException e){
-            System.out.println(e.toString());
-        }
-
+        for(Task e:tasks){
+            System.out.println(e);
+        }*/
 
     }
 }
