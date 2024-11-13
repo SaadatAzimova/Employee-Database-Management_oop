@@ -1,31 +1,23 @@
 package org.openjfx;
 
-import java.sql.*;
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class Main {
+
+    private static Connection conn; // Make conn static to use it in the static main method
+
     public static void main(String[] args) {
+        String url = "jdbc:postgresql://localhost:5432/employee_db"; // Ensure the database name is correct
+        String username = "postgres";
+        String password = "123456";
 
-        TaskData taskData = new TaskData();
-
-        Task tt = taskData.getTask(6);
-
-        int id = taskData.insertTask("Assignment", "Java and Database assignment with database", tt.getDeadline(), "MEDIUM");
-        System.out.println(id);
-
-        /*
-        System.out.println(tt);
-
-        taskData.updateTask(6, "new task", tt.getDescription(), tt.getDeadline(), tt.getPriority());
-
-        taskData.deleteTask(1);
-
-
-        ArrayList<Task> tasks = taskData.getAllTasks();
-
-        for(Task e:tasks){
-            System.out.println(e);
-        }*/
-
+        try {
+            conn = DriverManager.getConnection(url, username, password);
+            System.out.println("Database is successfully connected...");
+        } catch (SQLException e) {
+            System.out.println("Connection failed: " + e.getMessage());
+        }
     }
 }
