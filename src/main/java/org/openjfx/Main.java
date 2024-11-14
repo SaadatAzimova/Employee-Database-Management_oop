@@ -1,8 +1,7 @@
 package org.openjfx;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -18,6 +17,20 @@ public class Main {
             System.out.println("Database is successfully connected...");
         } catch (SQLException e) {
             System.out.println("Connection failed: " + e.getMessage());
+            return;  // Exit if the connection fails
+        }
+
+        // Pass the connection to EmployeeData constructor
+        EmployeeData taskData = new EmployeeData(conn);
+
+        // Make sure to check the list size before accessing an index
+        ArrayList<Employee> employees = taskData.getAllEmployees();
+        if (!employees.isEmpty()) {
+            for (Employee emp : employees) {
+                System.out.println(emp);  // Assuming Employee class has a toString() method
+            }
+        } else {
+            System.out.println("No employees found.");
         }
     }
 }
